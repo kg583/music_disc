@@ -1,0 +1,26 @@
+{
+    "pools": [
+        {
+            "bonus_rolls": 0,
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:music_disc_5",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_components",
+                            "components": {
+                                "minecraft:item_model": "minecraft:music_disc_cat",
+                                "minecraft:item_name": {
+                                    "translate": "item.minecraft.music_disc_cat"
+                                },
+                                "minecraft:jukebox_playable": "minecraft:cat"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
