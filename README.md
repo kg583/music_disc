@@ -10,7 +10,7 @@ Recipe files are currently unable to read [item components](https://minecraft.wi
 
 ## How do I use this?
 
-Add the contents of `data/` to your pack. To add a custom item, assign it to one of the [20 Music Discs](https://minecraft.wiki/w/Music_Disc) (except `music_disc_5`, which serves as the base for all other discs). Provide your custom item to the player by providing the corresponding music disc, with the `jukebox_playable` component disabled and visual components (i.e. `item_name`, `item_model`) set to the item's resources.
+Add the contents of `data/` to your pack. To add a custom item, assign it to one of the [20 Music Discs](https://minecraft.wiki/w/Music_Disc) (except `music_disc_5`, which serves as the base for all other discs). Provide your custom item to the player by providing the corresponding music disc, with the `jukebox_playable` component disabled and visual components (i.e. `item_name`, `item_model`) set to the item's resources. You'll also likely need to tweak `max_stack_size`.
 
 ```mcfunction
 /give @p minecraft:music_disc_13[!jukebox_playable,item_name="Your Item",item_model="your_pack:your_item"]
