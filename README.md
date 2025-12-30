@@ -10,11 +10,13 @@ Recipe files are currently unable to read [item components](https://minecraft.wi
 
 ## How do I use this?
 
-Add the contents of `data/` to your pack. To add a custom item, assign it to one of the [20 Music Discs](https://minecraft.wiki/w/Music_Disc) (except `music_disc_5`, which serves as the base for all other discs). Provide your custom item to the player by providing the corresponding music disc, with the `jukebox_playable` component disabled and visual components (i.e. `item_name`, `item_model`) set to the item's resources. You'll also likely need to tweak `max_stack_size`.
+Add the contents of `data/` to your pack. To add a custom item, assign it to one of the [20 Music Discs](https://minecraft.wiki/w/Music_Disc) (except `music_disc_5`, which serves as the base for all other discs). Provide your custom item to the player by providing the corresponding music disc, with the `jukebox_playable` component disabled and visual components (i.e. `item_name`, `item_model`) set to the item's resources.
 
 ```mcfunction
 /give @p minecraft:music_disc_13[!jukebox_playable,item_name="Your Item",item_model="your_pack:your_item"]
 ```
+
+You'll also likely need to tweak `max_stack_size`; note though that current recipe limitations prevent recipes from *producing* more than one `music_disc` item, even with `max_stack_size` set.
 
 If your pack alters any of the vanilla loot tables which produce music discs, you may need to use a tool like [Weld](https://weld.smithed.dev/). If your pack adds any additional sources of music discs, use the `music_disc` loot tables to provide correctly modified copies.
 
