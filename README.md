@@ -1,6 +1,6 @@
 ## What does this do?
 
-`music_disc` enables datapacks to add up to 20 custom items which are entirely unobtainable in Survival, so that they may be used freely in crafting recipes.
+`music_disc` enables datapacks to add up to 20 custom items which are entirely unobtainable and without side-effects in Survival, so that they may be used freely in crafting recipes.
 
 ## Why would I need this?
 
@@ -16,7 +16,7 @@ Add the contents of `data/` to your pack. To add a custom item, assign it to one
 /give @p minecraft:music_disc_13[!jukebox_playable,item_name="Your Item",item_model="your_pack:your_item"]
 ```
 
-You'll also likely need to tweak `max_stack_size`; note though that current recipe limitations prevent recipes from *producing* more than one `music_disc` item, even with `max_stack_size` set.
+You'll also likely need to tweak [`max_stack_size`](https://minecraft.wiki/w/Data_component_format#max_stack_size); note though that current recipe limitations prevent recipes from *producing* more than one `music_disc` item, even with `max_stack_size` set (see below).
 
 If your pack alters any of the vanilla loot tables which produce music discs, you may need to use a tool like [Weld](https://weld.smithed.dev/). If your pack adds any additional sources of music discs, use the `music_disc` loot tables to provide correctly modified copies.
 
@@ -38,10 +38,20 @@ Note that this is **not** a standalone pack, as it's not very big and rather lik
 
 All vanilla sources of music discs are made to produce copies of `music_disc_5`; this was chosen as the one true disc™ since it's the only disc involved in vanilla crafting via disc fragments. Each copy's [`jukebox_playable`](https://minecraft.wiki/w/Data_component_format#jukebox_playable), [`item_name`](https://minecraft.wiki/w/Data_component_format#item_name), [`item_model`](https://minecraft.wiki/w/Data_component_format#item_model), and [`rarity`](https://minecraft.wiki/w/Data_component_format#rarity) components are set to match the intended disc. In doing so, these copies are made indistinguishable by any Survival means from the real thing.
 
-Thus, every disc besides `music_disc_5` becomes unobtainable in Survival, freeing them for use as truly unique custom item bases.
+Thus, every disc besides `music_disc_5` becomes unobtainable in Survival, freeing them for use as truly unique custom item bases. Music discs furthermore have no Survival side-effects with the aforementioned components explicitly removed.
 
 ## What are its limitations?
 
 Since we're hijacking vanilla items, there are only the twenty to go around for *all* datapacks. Two packs which use e.g. `music_disc_stal` for different things have no way to tell *each other* apart when crafting, so conflation remains a potential issue. The count of twenty can also only increase whenever Mojang adds a new music disc; I intend to update this repository whenever this happens.
 
+Furthermore, as mentioned above, since music discs are not stackable in vanilla, custom crafting recipes which output an overridden disc cannot have a stack size greater than 1, even if you add a `max_stack_size` component intending otherwise (the recipe registry simply won't accept it).
+
 Of course, the best outcome would be for completely custom items, or recipes which can read item components, to be added before I have to bother.
+
+## Any alternatives?
+
+There is another approach with *nearly* no Survival side-effects: [spawn eggs](https://minecraft.wiki/w/Spawn_Egg). This has been a preferred method in the larger community for a while due to its far easier implementation (spawn eggs are already absent from Survival), larger set of unique items (over 80), and maximum stack size of 64 by default. Their ability to, ya know, spawn a thing can be completely disabled by setting their [`entity_data`](https://minecraft.wiki/w/Data_component_format#entity_data) component to produce a `player`; the code path's escape hatch to prevent attempting to spawn a player is early enough to keep the egg from even being used up!
+
+The catch? Spawn eggs can be used to set the mob contained in a [spawner](https://minecraft.wiki/w/Monster_Spawner) by right-clicking. While this doesn't affect the spawner (again, spawning a player is a big no-no), the egg is used up in Survival (and appears to dodge the [`use_remainder`](https://minecraft.wiki/w/Data_component_format#use_remainder) check in the process). Thus, in the albeit unlikely scenario a player accidentally right-clicks a spawner while holding a custom item (which is probably, in all likelihood, rather "important" to the pack that made it), it vanishes without a trace.
+
+A last-ditch failsafe using the [`item_used_on_block`](https://minecraft.wiki/w/Advancement_definition#minecraft:item_used_on_block) advancement trigger to restore the item would suffice to save the player from such inexplicable strife, but still breaks Survival immersion no matter how you do it (and may even accidentally convince the player that the interaction is special and intended).
