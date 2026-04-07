@@ -10,13 +10,13 @@ Recipe files are currently unable to read [item components](https://minecraft.wi
 
 ## How do I use this?
 
-Add the contents of `data/` to your pack. To add a custom item, assign it to one of the [20 Music Discs](https://minecraft.wiki/w/Music_Disc) (except `music_disc_5`, which serves as the base for all other discs). Provide your custom item to the player by providing the corresponding music disc, with the `jukebox_playable` component disabled and visual components (i.e. `item_name`, `item_model`) set to the item's resources.
+Add the contents of `data/` to your pack. To add a custom item, assign it to one of the [20 Music Discs](https://minecraft.wiki/w/Music_Disc) (except `music_disc_5`, which serves as the base for all other discs). Provide your custom item to the player by providing the corresponding music disc, with the `jukebox_playable` component disabled.
 
 ```mcfunction
-/give @p minecraft:music_disc_13[!jukebox_playable,item_name="Your Item",item_model="your_pack:your_item"]
+/give @p minecraft:music_disc_13[!jukebox_playable]
 ```
 
-You'll also likely need to tweak [`max_stack_size`](https://minecraft.wiki/w/Data_component_format#max_stack_size); note though that current recipe limitations prevent recipes from *producing* more than one `music_disc` item, even with `max_stack_size` set (see below).
+The custom item's name and texture should be set by modifying the *vanilla* resources, as the recipe book shows crafting ingredients as they appear without any data components. You'll also likely need to tweak `max_stack_size`; note though that current recipe limitations prevent recipes from *producing* more than one `music_disc` item, even with `max_stack_size` set (see below).
 
 If your pack alters any of the vanilla loot tables which produce music discs, you may need to use a tool like [Weld](https://weld.smithed.dev/). If your pack adds any additional sources of music discs, use the `music_disc` loot tables to provide correctly modified copies.
 
@@ -44,7 +44,7 @@ Thus, every disc besides `music_disc_5` becomes unobtainable in Survival, freein
 
 Since we're hijacking vanilla items, there are only the twenty to go around for *all* datapacks. Two packs which use e.g. `music_disc_stal` for different things have no way to tell *each other* apart when crafting, so conflation remains a potential issue. The count of twenty can also only increase whenever Mojang adds a new music disc; I intend to update this repository whenever this happens.
 
-Furthermore, as mentioned above, since music discs are not stackable in vanilla, custom crafting recipes which output an overridden disc cannot have a stack size greater than 1, even if you add a `max_stack_size` component intending otherwise (the recipe registry simply won't accept it).
+Furthermore, as mentioned above, since music discs are not stackable in vanilla, custom crafting recipes which output an overridden disc cannot have a stack size greater than 1, even if you add a [`max_stack_size`](https://minecraft.wiki/w/Data_component_format#max_stack_size) component intending otherwise (the recipe registry simply won't accept it).
 
 Of course, the best outcome would be for completely custom items, or recipes which can read item components, to be added before I have to bother.
 
